@@ -14,9 +14,7 @@ Since GitHub Jobs API was deprecated, this demo generates **synthetic data** to 
 ---
 ## 🚀 How to Run
 Set token: 
-```bash
 export GITHUB_TOKEN="paste_your_token_here"
 
 Run the demo: 
-```bash
 python demo.py
