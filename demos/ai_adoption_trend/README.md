@@ -5,16 +5,15 @@ Since GitHub Jobs API was deprecated, this demo generates **synthetic data** to 
 
 ---
 
-## 📂 Files
+## Files
 
 - **demo.py** → Main script to fetch/generate job trend data and visualize results.
 - **README.md** → Documentation.
-- **ai_trend_by_topic.html → Result.
+- **ai_trend_by_topic.html** → Result.
 
 ---
 ## 🚀 How to Run
-Set token: 
-export GITHUB_TOKEN="paste_your_token_here"
 
-Run the demo: 
-python demo.py
+- Set token: export GITHUB_TOKEN="paste_your_token_here"
+
+- Run the demo: python demo.py
