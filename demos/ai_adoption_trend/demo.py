@@ -4,15 +4,16 @@ import plotly.express as px
 import time
 import os
 
-# --- 0. Lấy token từ environment variable để bảo mật ---
-# Trước khi chạy: export GITHUB_TOKEN="your_token_here"
+# --- 0. Get token from environment variable for security ---
+# Before running: export GITHUB_TOKEN="your_token_here"
+
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 if not GITHUB_TOKEN:
     raise ValueError("Please set your GitHub token in environment variable GITHUB_TOKEN")
 
 headers = {"Authorization": f"token {GITHUB_TOKEN}"}
 
-# --- 1. Danh sách topic AI cần fetch ---
+# --- 1. List of AI topics to fetch ---
 topics_to_check = [
     "machine-learning",
     "deep-learning",
@@ -23,7 +24,7 @@ topics_to_check = [
 
 all_repos = []
 
-# --- 2. Fetch repo từ GitHub API ---
+# --- 2. Fetch repo from GitHub API ---
 for topic in topics_to_check:
     print(f"Fetching topic: {topic}")
     for page in range(1, 6):  # 5 page x 50 repo = 250 repo/topic
@@ -43,14 +44,14 @@ for topic in topics_to_check:
             })
         time.sleep(1)  # tránh rate limit
 
-# --- 3. Chuyển sang DataFrame ---
+# --- 3. Convert to DataFrame ---
 df = pd.DataFrame(all_repos)
 df['year'] = pd.to_datetime(df['created_at']).dt.year
 
-# --- 4. Aggregate stars theo topic và năm ---
+# --- 4. Aggregate stars by topic and year ---
 trend = df.groupby(['year','topic'])['stars'].sum().reset_index()
 
-# --- 5. Vẽ chart stacked bar theo topic ---
+# --- 5. Plot stacked bar chart by topic ---
 fig = px.bar(
     trend,
     x='year',
@@ -60,7 +61,7 @@ fig = px.bar(
     labels={'stars':'Total Stars','year':'Year','topic':'AI Topic'}
 )
 
-# --- 6. Lưu chart ra HTML ---
+# --- 6. Save chart to HTML ---
 output_file = "ai_trend_by_topic.html"
 fig.write_html(output_file)
 print(f"Chart saved to {output_file}. Open in browser to view the interactive chart.")
